@@ -1,8 +1,23 @@
 const Listing=require("../models/listing");
 
+
 module.exports.index=async (req,res)=>{
-   const allListings=await Listing.find({});
-   res.render("listings/index.ejs",{allListings});
+    let {category,search} =req.query;
+    let filter={};
+
+    if(category){
+        filter={ category:category};
+    }
+    if(search){
+        filter.$or=[
+            {title:{$regex:search,$options:"i"}},
+            {location:{$regex:search,$options:"i"}},
+            {country:{$regex:search,$options:"i"}},
+        ];
+    }
+   const allListings=await Listing.find(filter);
+  
+   res.render("listings/index.ejs",{allListings,category,search});
 };
 
 
@@ -67,11 +82,29 @@ module.exports.updateListing=async(req,res)=>{
     req.flash("success","Listing Updated!");
     res.redirect(`/listings/${id}`);
 };
-
 module.exports.destroyListing=async(req,res)=>{
       let {id}=req.params;
       let deletedListing=await Listing.findByIdAndDelete(id);
       console.log(deletedListing);
       req.flash("success","Listing Deleted!");
       res.redirect("/listings");
+};
+module.exports.getSuggestions = async (req, res) => {
+    const { q } = req.query;
+    if (!q) return res.json([]);
+
+    try{
+        const suggestions = await Listing.find({
+        $or: [
+            { title: { $regex: q, $options: "i" } },
+            { location: { $regex: q, $options: "i" } },
+            { country: { $regex: q, $options: "i" } }
+        ]
+    }).limit(5).select("title location country image");
+
+    res.json(suggestions);
+    } catch(err){
+        res.status(500).json({ error: err.message });
+    }
+      
 };

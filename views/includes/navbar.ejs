@@ -1,58 +1,96 @@
 <style>
-  .search-btn{
-    background-color: #fe424d;
-    color:#fff;
-    border-radius: 25px;
-    padding:0 1rem 0 1rem;
-  }
-  .search-btn:hover{
-    background-color: #fe424d;
-    color:#fff;
-  }
-  
-  .search-btn i {
-    display:inline;
-    margin-right:0.5rem;
+  .search-wrapper {
+    position: relative; /* This ensures the dropdown stays attached to the bar */
+    display: flex;
+    align-items: center;
   }
 
-  .search-inp{
+  .search-btn {
+    background-color: #fe424d;
+    color: #fff;
     border-radius: 25px;
-    padding:0.5rem 3rem 0.5rem 3rem;
-    font-size: 1rem;
+    padding: 0 1rem;
+    border: none;
   }
+
+  .search-btn:hover {
+    background-color: #fe424d;
+    color: #fff;
+    opacity: 0.9;
+  }
+
+  .search-inp {
+    border-radius: 25px !important;
+    padding: 0.5rem 1.5rem !important;
+    width: 250px; /* Adjust width as needed */
+  }
+
+ .suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%; /* Match the width of the search bar */
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 2000 !important; /* Forces it to the front layer */
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 8px;
+}
+
+/* Add this to ensure images look good in the dropdown */
+.suggestion-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 12px;
+}
 </style>
-
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-    <button 
-    class="navbar-toggler" 
-    type="button" 
-    data-bs-toggle="collapse"
-    data-bs-target="#navbarNavAltMarkup"
-    >
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-link" href="/listings">Explore</a>
       </div>
+
       <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2 search-inp" type="search" placeholder="Search destinations">
-          <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-        </form>
+        <div class="search-wrapper">
+          <form class="d-flex" role="search" action="/listings" method="GET" id="search-form">
+            <input 
+              class="form-control me-2 search-inp" 
+              type="search" 
+              placeholder="Search destinations" 
+              name="search" 
+              id="search-input" 
+              autocomplete="off"
+            >
+            <button class="btn search-btn" type="submit">
+              <i class="fa-solid fa-magnifying-glass"></i>&nbsp;Search
+            </button>
+          </form>
+          <div id="suggestions-box" class="suggestions-dropdown" style="display:none;"></div>
+        </div>
       </div>
+
       <div class="navbar-nav ms-auto">
         <a class="nav-link" href="/listings/new">Airbnb your home</a>
         <% if(!currUser){ %>
-        <a class="nav-link" href="/signup"><b>Sign up</b></a>
-        <a class="nav-link" href="/login"><b>Log in</b></a>
-        <% }%>
+          <a class="nav-link" href="/signup"><b>Sign up</b></a>
+          <a class="nav-link" href="/login"><b>Log in</b></a>
+        <% } %>
         <% if(currUser) {%>
-        <a class="nav-link" href="/logout"><b>Log out</b></a>
-        <% }%>
+          <a class="nav-link" href="/logout"><b>Log out</b></a>
+        <% } %>
       </div>
     </div>
   </div>

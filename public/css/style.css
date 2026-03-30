@@ -1,3 +1,6 @@
+html{
+    scroll-behavior: smooth;
+}
 body{
   font-family: "Plus Jakarta Sans", sans-serif !important;
   display:flex;
@@ -119,4 +122,152 @@ body{
 .show-card{
     padding-left:0;
     padding-right:0;
+}
+/* Container for all filters */
+#filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.filter-options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.tax-toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3.25rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    margin-left: 2rem; /* Gap between icons and toggle */
+    white-space: nowrap; /* Prevents the label from breaking into two lines */
+}
+
+/* Individual Filter Styling */
+.filter {
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.7; /* Faded when not hovered */
+    transition: 0.2s ease;
+    text-decoration: none; /* Removes blue link color */
+    color: inherit;
+}
+
+.filter:hover {
+    opacity: 1;
+    cursor: pointer;
+    border-bottom: 2px solid #fe424d; /* Airbnb's signature red */
+}
+
+/* The icon inside the filter */
+.filter i {
+    font-size: 1.2rem;
+}
+
+/* The text below the icon */
+.filter p {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+/* High-priority: The 'Active' state for the current category */
+.active-filter {
+    opacity: 1 !important;
+    border-bottom: 2px solid #fe424d;
+    font-weight: 600;
+}
+
+/* Update these specific blocks in your style.css */
+
+.no-listing-container {
+    width: 100%;       /* This forces the box to stretch across the whole page */
+    text-align: center; /* This then centers everything inside that full-width box */
+    /* margin-top: 0.1rem; */
+    margin-left: 22rem;   /* Optional: adds space below the filters */
+}
+
+.no-listing-content {
+    max-width: 600px;        /* Prevents the text from getting too wide on monitors */
+    width: 100%;
+    margin: 0 auto;          /* Standard centering trick */
+}
+
+.empty-icon {
+    font-size: 8rem; 
+    color: #fe424d;
+    margin-bottom: 1.5rem;
+    display: block;          /* Ensures the icon sits on its own line */
+}
+
+.explore-btn {
+    border-radius: 20px;     /* Makes it look more like Airbnb's UI */
+    padding: 10px 25px;
+    font-weight: 600;
+}
+.no-listings-content h2 {
+    font-weight: 600;
+    color: #222;
+}
+
+.no-listings-content p {
+    color: #717171;
+    margin-bottom: 2rem;
+}
+.search-wrapper {
+    position: relative; /* Anchor for the dropdown */
+    width: 300px;
+}
+
+.suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 5px;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.suggestion-item:hover {
+    background-color: #f7f7f7;
+}
+
+.suggestion-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.suggestion-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.suggestion-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.suggestion-loc {
+    font-size: 0.8rem;
+    color: #717171;
 }
